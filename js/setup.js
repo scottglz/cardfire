@@ -1,7 +1,8 @@
 requirejs.config({
     "baseUrl": "js",
     paths: {
-    	"template" : "../template"
+    	"template" : "../template",
+    	"tpl": "lib/tpl"
     }
  });
 require(["main"]);
