@@ -25,8 +25,7 @@ define ([], function() {
          this.model.on("change:x", this._onChangeX, this)
                    .on("change:y", this._onChangeY, this)
                    .on("change:up", this._onChangeUp, this)
-                   .on("change:zindex", this._onChangeZIndex, this)
-                   .on("destroy", this._onDestroyModel, this);
+                   .on("change:zindex", this._onChangeZIndex, this);
          
         makeViewDraggable(this, {containment: this.$el.parent()});
    
@@ -71,9 +70,6 @@ define ([], function() {
         
 		},
 
-    _onDestroyModel: function() {
-       this.$el.remove();
-    },
       
       _onChangeX: function(m, v) {
           this.$el.css("left", v);
