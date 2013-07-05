@@ -1,0 +1,27 @@
+body {
+	font-family: sans-serif
+}
+
+#table {
+	position: relative;
+	background: green;
+	width: 1000px;
+	height: 600px;
+	border:10px solid green;
+}
+
+.card {
+	display: block;
+	position: absolute!important;
+	width:71px; 
+	height:96px;
+}
+
+.card.up {
+   background-image:url('../res/cards.png');
+}
+
+.card.down {
+   background-image:url('../res/cardback.png');
+   background-position: 0px 0px!important;    
+}
