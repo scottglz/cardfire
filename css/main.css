@@ -25,3 +25,13 @@ body {
    background-image:url('../res/cardback.png');
    background-position: 0px 0px!important;    
 }
+
+.globalerror {
+   background: yellow;
+   zindex: 1000;
+   border:1px solid red;
+   padding: 3px;
+   position:absolute;
+   top:5px;
+   left:5px;
+}
