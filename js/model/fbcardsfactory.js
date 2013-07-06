@@ -2,7 +2,7 @@ define(["model/cards"], function(Cards) {
 	return {
 
 		open: function(firebase) {
-			var props = _.extend({firebase:firebase}, Cards);
+			var props = _.extend({firebase:firebase.child("cards")}, Cards);
 			var Collection = Backbone.Firebase.Collection.extend(props);  
 			return new Collection();
 		},
