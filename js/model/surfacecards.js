@@ -1,4 +1,4 @@
-// cards
+// surfacecards -- a collection of cards on a surface.
 
 define(["model/cardmodel"], function(CardModel) {
 	"use strict";

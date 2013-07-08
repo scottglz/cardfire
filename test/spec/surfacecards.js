@@ -1,6 +1,6 @@
-define(["model/cards"], function(Cards) {
+define(["model/surfacecards"], function(Cards) {
 
-	describe("cards", function() {
+	describe("surfacecards", function() {
 
 		var cards;
 

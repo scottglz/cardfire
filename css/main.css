@@ -10,6 +10,20 @@ body {
 	border:10px solid green;
 }
 
+#surface {
+   width: 1000px;
+   height: 300px;
+}
+
+.ownhand {
+   position: relative;
+   border: 2px dotted rgba(255,255,255,.4);
+   height: 96px;
+   min-width: 200px;
+}
+
+
+
 .card {
 	display: block;
 	position: absolute!important;
@@ -23,7 +37,7 @@ body {
 
 .card.down {
    background-image:url('../res/cardback.png');
-   background-position: 0px 0px!important;    
+
 }
 
 .globalerror {

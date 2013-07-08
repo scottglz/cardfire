@@ -3,8 +3,8 @@
 define([], function() {
 	return Backbone.Model.extend({
 		validate: function() {
-			if (!this.get("deck"))
-				return "no deck";
+			if (!this.get("surfacecards"))
+				return "no surface cards";
 		}
 	});
 });

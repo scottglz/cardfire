@@ -1,16 +1,16 @@
-define(["model/cards"], function(Cards) {
+define(["model/surfacecards"], function(SurfaceCards) {
 	return {
 
 		open: function(firebase) {
-			var props = _.extend({firebase:firebase.child("cards")}, Cards);
+			var props = _.extend({firebase:firebase.child("cards")}, SurfaceCards);
 			var Collection = Backbone.Firebase.Collection.extend(props);  
 			return new Collection();
 		},
 
 		createNew: function(firebase) {
 			var newfb = firebase.push();
-			var deck = this.open(newfb);
-			deck.createNew();
+			var surfaceCards = this.open(newfb);
+			surfaceCards.createNew();
 			return newfb.name();
 
 		},

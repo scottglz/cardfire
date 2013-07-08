@@ -1,20 +1,6 @@
 define ([], function() {
    "use strict";
 
-   function makeViewDraggable(view, options) {
-      var opts = _.extend({
-         start: function(eo, ui) {
-            if (view.onDragStart)
-               view.onDragStart(eo, ui);
-         },
-         drag: function(eo, ui) {
-            if (view.onDragDrag)
-               view.onDragDrag(eo, ui);
-         }
-      }, options);
-      view.$el.draggable(opts);  
-   }   
-
    return Backbone.View.extend({
       tagName: "div",
       className: "card",
@@ -25,9 +11,13 @@ define ([], function() {
          this.model.on("change:x", this._onChangeX, this)
             .on("change:y", this._onChangeY, this)
             .on("change:up", this._onChangeUp, this)
-            .on("change:zindex", this._onChangeZIndex, this);
+            .on("change:zindex", this._onChangeZIndex, this)
+            .on("remove", this._onRemove, this);
 
-         makeViewDraggable(this, {containment: this.$el.parent()});
+         var self = this;
+         this.$el.draggable({
+            containment: $("#table") // BAD coupling
+          });
 
          // Workaround for serious annoyance -- if you set up an on("click") even before calling .draggable() on an element, then you get a click
          // at the end of the drag. For some reason, if you do it in the opposite order, you don't. We don't want the click event. But we're 
@@ -38,6 +28,8 @@ define ([], function() {
 
       events: {
          "click": "_onClick",
+         "dragstart": "onDragStart",
+         "drag": "onDragDrag"
       }, 
 
       setPos: function(x, y) {
@@ -54,19 +46,29 @@ define ([], function() {
 
       onDragDrag: function(eo, ui) {
          this.queueSetPos(ui.position.left, ui.position.top);
-      },   
+      },  
+
+
+      _getBackgroundPositionCSS: function() {
+         var model = this.model,
+             suit_num = model.getSuitNumber();
+         if (model.get("up")) 
+            return ((model.get("rank")-1) * -73 -1 ) + "px " + (suit_num * -98 - 1) + "px ";
+         else
+            return "0px 0px";
+      },
 
       render: function() {
          var model = this.model;
-         var suit_num = model.getSuitNumber();
          this.$el.css({
-          "background-position": ((model.get("rank")-1) * -73 -1 ) + "px " + (suit_num * -98 - 1) + "px ",
+          "background-position": this._getBackgroundPositionCSS(),
           "left": model.get("x"),
           "top": model.get("y"),
           "z-index": model.get("zindex")
-       });
+         });
          var up = model.get("up");
          this.$el.toggleClass("up", up).toggleClass("down", !up);
+         this.$el.data("view", this);
          
       },
 
@@ -80,11 +82,18 @@ define ([], function() {
       }, 
   
       _onChangeUp: function(m, v) {
-        this.$el.toggleClass("up", v).toggleClass("down", !v);
+        this.$el.toggleClass("up", v).toggleClass("down", !v)
+            .css("background-position", this._getBackgroundPositionCSS());
       }, 
 
       _onChangeZIndex: function(m, v) {
         this.$el.css("z-index", v);
-      }   
+      },
+
+      _onRemove: function() {
+        this.$el.remove();
+      }
+
+
    });
 });
